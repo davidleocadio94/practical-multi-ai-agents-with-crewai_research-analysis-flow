@@ -104,7 +104,7 @@ def run_crew(topic: str) -> str:
     result = crew.kickoff(inputs={"topic": topic})
 
     # Format the structured output nicely
-    if result.pydantic:
+    if hasattr(result, 'pydantic') and result.pydantic:
         report = result.pydantic
         output = f"# Research Report: {topic}\n\n"
         output += f"## Executive Summary\n{report.executive_summary}\n\n"
@@ -122,4 +122,7 @@ def run_crew(topic: str) -> str:
         output += f"## Conclusion\n{report.conclusion}"
         return output
 
-    return result.raw
+    # Handle both string and CrewOutput object results
+    if hasattr(result, 'raw'):
+        return result.raw
+    return str(result)
