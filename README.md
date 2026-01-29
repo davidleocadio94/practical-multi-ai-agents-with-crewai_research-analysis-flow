@@ -1,14 +1,3 @@
----
-title: Research Analysis Flow
-emoji: 🔬
-colorFrom: purple
-colorTo: blue
-sdk: gradio
-sdk_version: 5.12.0
-app_file: app.py
-pinned: false
----
-
 # Research Analysis Flow
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/davidleocadio94DLAI/practical-multi-ai-agents-with-crewai_research-analysis-flow)
