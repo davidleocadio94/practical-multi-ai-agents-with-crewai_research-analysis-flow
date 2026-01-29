@@ -4,13 +4,19 @@ import gradio as gr
 from src.crew import run_crew
 
 
-def analyze_topic(topic: str) -> str:
+def analyze_topic(topic: str, progress=gr.Progress()) -> str:
     """Run research analysis on the given topic."""
     if not topic.strip():
         return "Please enter a topic to research."
 
     try:
+        progress(0, desc="Starting research analysis...")
+        progress(0.1, desc="Research Analyst: Gathering information...")
+
+        # Run the crew (this is where the actual work happens)
         result = run_crew(topic)
+
+        progress(1.0, desc="Analysis complete!")
         return result
     except Exception as e:
         return f"Error during analysis: {str(e)}"
@@ -34,6 +40,8 @@ with gr.Blocks(title="Research Analysis Flow", theme=gr.themes.Soft()) as demo:
         - Key Findings (with importance levels)
         - Prioritized Recommendations
         - Conclusion
+
+        *Note: Analysis takes 1-3 minutes as multiple AI agents work together.*
         """
     )
 
