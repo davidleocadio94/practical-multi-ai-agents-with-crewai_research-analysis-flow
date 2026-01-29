@@ -4,22 +4,32 @@ import gradio as gr
 from src.crew import run_crew
 
 
-def analyze_topic(topic: str, progress=gr.Progress()) -> str:
+def analyze_topic(topic: str):
     """Run research analysis on the given topic."""
     if not topic.strip():
-        return "Please enter a topic to research."
+        yield "Please enter a topic to research."
+        return
 
     try:
-        progress(0, desc="Starting research analysis...")
-        progress(0.1, desc="Research Analyst: Gathering information...")
+        # Show processing status
+        yield """## Processing...
+
+The multi-agent crew is analyzing your topic. This typically takes 1-3 minutes.
+
+**Current Status:**
+1. Research Analyst - Gathering comprehensive information...
+2. Data Analyst - (waiting)
+3. Report Writer - (waiting)
+
+Please wait..."""
 
         # Run the crew (this is where the actual work happens)
         result = run_crew(topic)
 
-        progress(1.0, desc="Analysis complete!")
-        return result
+        # Return the final result
+        yield result
     except Exception as e:
-        return f"Error during analysis: {str(e)}"
+        yield f"Error during analysis: {str(e)}"
 
 
 # Create Gradio interface
